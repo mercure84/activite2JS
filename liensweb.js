@@ -114,7 +114,7 @@ blocFormulaire.id = "blocFormulaire";
 formulaire.forEach(function (zone) {
     var elementFormulaire = document.createElement(zone.type);
     elementFormulaire.name = zone.name;
-    elementFormulaire.value = "http://github.com";
+
     elementFormulaire.placeholder = zone.texte;
     elementFormulaire.style.width = zone.taille;
     elementFormulaire.style.marginRight = "10px";
@@ -139,7 +139,7 @@ boutonAjoutLienElt.addEventListener("click", function () {
 //code du bouton "submit" de notre formulaire
 
 blocFormulaire.addEventListener("submit", function (e) {
-    var intervalId = null;
+
     var nouveauTitre = blocFormulaire.elements.titre.value;
     var nouveauLien = {
         titre: nouveauTitre,
@@ -151,7 +151,21 @@ blocFormulaire.addEventListener("submit", function (e) {
     var elementLien = creerElementLien(nouveauLien);
     contenu.insertBefore(elementLien, document.getElementsByClassName("lien")[0]);
   
- intervalId = setInterval(confirmation(nouveauTitre), 2000);
+    var blocBleu = document.createElement("div")
+    blocBleu.id = "blocBleu";
+    blocBleu.textContent = "Le lien " + nouveauTitre + " a bien été ajouté !";
+    blocBleu.style.marginTop = "25px";
+    blocBleu.style.color = "#428bca";
+    blocBleu.style.backgroundColor = "LightBlue";
+    hautElt.replaceChild(blocBleu, blocFormulaire);
+    setTimeout(function(){
+        hautElt.replaceChild(boutonAjoutLienElt, blocBleu);
+        
+    },2000)
+
+    
+    
+    
      e.preventDefault();
     //hautElt.replaceChild(blocBleu, boutonAjoutLienElt);
     
@@ -163,9 +177,7 @@ blocFormulaire.addEventListener("submit", function (e) {
 // création du bandeau bleu qui apparait 2s
 function confirmation(nouveauLien) {
 
-    var blocBleu = document.createElement("div")
-    blocBleu.id = "blocBleu";
-    blocBleu.textContent = "Le lien " + nouveauLien + " a bien été ajouté !"
+
 
 
 
