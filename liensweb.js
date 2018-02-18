@@ -114,6 +114,7 @@ formulaire.forEach(function (zone) {
     elementFormulaire.name = zone.name;
     elementFormulaire.id = zone.name;
     elementFormulaire.placeholder = zone.texte;
+    elementFormulaire.setAttribute("required", "true");
     elementFormulaire.style.width = zone.taille;
     elementFormulaire.style.marginRight = "10px";
     blocFormulaire.appendChild(elementFormulaire);
@@ -147,14 +148,6 @@ blocFormulaire.addEventListener("submit", function (e) {
     var nouveauUrl = blocFormulaire.elements.lien.value;
     var nouveauTitre = blocFormulaire.elements.titre.value;
 
-    //on teste si les valeurs sont remplies
-    if (nouveauAuteur == "" || nouveauUrl == "" || nouveauTitre == "") {
-
-        aideFormulaire.textContent = "Un champs est vide";
-
-
-
-    } else {
 
         // si on est ici c'est que tous les champs du formulaire sont remplis !
         // Si l’URL saisie ne commence ni par “http://” ni par “https://”, on lui ajoute “http://” au début.
@@ -198,7 +191,7 @@ blocFormulaire.addEventListener("submit", function (e) {
 
         }, 2000)
 
-    }
+    
 
     e.preventDefault();
 });
