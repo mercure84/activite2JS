@@ -171,16 +171,20 @@ blocFormulaire.addEventListener("submit", function (e) {
         var elementLien = creerElementLien(nouveauLien);
         contenu.insertBefore(elementLien, document.getElementsByClassName("lien")[0]);
 
-        
+        // vidange des valeurs du formulaire
+        blocFormulaire.elements.auteur.value ="";
+        blocFormulaire.elements.lien.value ="";
+        blocFormulaire.elements.titre.value ="";
         
         
         
         var blocBleu = document.createElement("p")
         blocBleu.id = "blocBleu";
         blocBleu.textContent = "Le lien " + nouveauTitre + " a bien été ajouté !";
-        blocBleu.style.marginTop = "25px";
+        blocBleu.style.backgroundColor= "LightBlue";
         blocBleu.style.color = "#428bca";
-        blocBleu.style.backgroundColor = "LightBlue";
+        
+
         hautElt.replaceChild(blocBleu, blocFormulaire);
         setTimeout(function () {
             hautElt.replaceChild(boutonAjoutLienElt, blocBleu);
