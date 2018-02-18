@@ -58,9 +58,6 @@ function creerElementLien(lien) {
 var contenu = document.getElementById("contenu");
 
 
-
-
-
 // Parcours de la liste des liens et ajout d'un élément au DOM pour chaque lien
 listeLiens.forEach(function (lien) {
     var elementLien = creerElementLien(lien);
@@ -123,8 +120,6 @@ formulaire.forEach(function (zone) {
 
 })
 
-
-
 var submitAjouter = document.createElement("input");
 submitAjouter.type = "submit";
 submitAjouter.value = "Ajouter";
@@ -132,15 +127,14 @@ blocFormulaire.appendChild(submitAjouter);
 blocFormulaire.appendChild(document.createElement("p"));
 
 // ajout d'un div aide formulaire pour y afficher les éventuelles erreures de saisies
-    var aideFormulaire = document.createElement("div");
-    blocFormulaire.appendChild(aideFormulaire);
+var aideFormulaire = document.createElement("div");
+blocFormulaire.appendChild(aideFormulaire);
 
 
 // code de l'action du bouton id = boutonAjoutLien : on supprime le bouton et on le remplace par notre blocformulaire
 boutonAjoutLienElt.addEventListener("click", function () {
 
     hautElt.replaceChild(blocFormulaire, boutonAjoutLienElt);
-
 
 })
 
@@ -164,40 +158,39 @@ blocFormulaire.addEventListener("submit", function (e) {
 
         // si on est ici c'est que tous les champs du formulaire sont remplis !
         // Si l’URL saisie ne commence ni par “http://” ni par “https://”, on lui ajoute “http://” au début.
-        
+
         var regexLien = /^https?:\/\//;
-        
-        if (regexLien.test(nouveauUrl) == false){
+
+        if (regexLien.test(nouveauUrl) == false) {
             console.log("plouf");
             nouveauUrl = "http://" + nouveauUrl;
             
-            }
-        
-            var nouveauLien = {
-        titre: nouveauTitre,
-        url: nouveauUrl,
-        auteur: nouveauAuteur,
 
-    };
+        }
 
-        
-        
+        var nouveauLien = {
+            titre: nouveauTitre,
+            url: nouveauUrl,
+            auteur: nouveauAuteur,
+
+        };
+
         var elementLien = creerElementLien(nouveauLien);
         contenu.insertBefore(elementLien, document.getElementsByClassName("lien")[0]);
 
         // vidange des valeurs du formulaire
-        blocFormulaire.elements.auteur.value ="";
-        blocFormulaire.elements.lien.value ="";
-        blocFormulaire.elements.titre.value ="";
-        
-        
-        
+        blocFormulaire.elements.auteur.value = "";
+        blocFormulaire.elements.lien.value = "";
+        blocFormulaire.elements.titre.value = "";
+
+
+
         var blocBleu = document.createElement("p")
         blocBleu.id = "blocBleu";
         blocBleu.textContent = "Le lien " + nouveauTitre + " a bien été ajouté !";
-        blocBleu.style.backgroundColor= "LightBlue";
+        blocBleu.style.backgroundColor = "LightBlue";
         blocBleu.style.color = "#428bca";
-        
+
 
         hautElt.replaceChild(blocBleu, blocFormulaire);
         setTimeout(function () {
@@ -205,13 +198,7 @@ blocFormulaire.addEventListener("submit", function (e) {
 
         }, 2000)
 
-
-
-
-
-
     }
-
 
     e.preventDefault();
 });
