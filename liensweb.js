@@ -72,7 +72,7 @@ listeLiens.forEach(function (lien) {
 
 var hautElt = document.createElement("div");
 hautElt.id = "haut";
-document.getElementsByTagName("h1")[0].appendChild(hautElt);
+document.getElementsByTagName("body")[0].insertBefore(hautElt, contenu);
 
 // création  du bouton "Ajouter un lien"
 
@@ -81,6 +81,7 @@ boutonAjoutLienElt.id = "boutonAjoutLien";
 boutonAjoutLienElt.textContent = "Ajouter un lien";
 
 hautElt.appendChild(boutonAjoutLienElt);
+hautElt.appendChild(document.createElement("p"));
 
 // création du formulaire comprenant 3 zone de texte à remplir (Auteur, titre, lien) + bouton ajouter (submit)
 
@@ -114,7 +115,7 @@ blocFormulaire.id = "blocFormulaire";
 formulaire.forEach(function (zone) {
     var elementFormulaire = document.createElement(zone.type);
     elementFormulaire.name = zone.name;
-
+    elementFormulaire.id = zone.name;
     elementFormulaire.placeholder = zone.texte;
     elementFormulaire.style.width = zone.taille;
     elementFormulaire.style.marginRight = "10px";
@@ -122,11 +123,17 @@ formulaire.forEach(function (zone) {
 
 })
 
+
+
 var submitAjouter = document.createElement("input");
 submitAjouter.type = "submit";
 submitAjouter.value = "Ajouter";
 blocFormulaire.appendChild(submitAjouter);
+blocFormulaire.appendChild(document.createElement("p"));
 
+// ajout d'un div aide formulaire pour y afficher les éventuelles erreures de saisies
+    var aideFormulaire = document.createElement("div");
+    blocFormulaire.appendChild(aideFormulaire);
 
 
 // code de l'action du bouton id = boutonAjoutLien : on supprime le bouton et on le remplace par notre blocformulaire
@@ -134,51 +141,59 @@ boutonAjoutLienElt.addEventListener("click", function () {
 
     hautElt.replaceChild(blocFormulaire, boutonAjoutLienElt);
 
+
 })
 
 //code du bouton "submit" de notre formulaire
 
 blocFormulaire.addEventListener("submit", function (e) {
 
+    //on récupère les valeurs du formulaire
+    var nouveauAuteur = blocFormulaire.elements.auteur.value;
+    var nouveauUrl = blocFormulaire.elements.lien.value;
     var nouveauTitre = blocFormulaire.elements.titre.value;
     var nouveauLien = {
         titre: nouveauTitre,
-        url: blocFormulaire.elements.lien.value,
-        auteur: blocFormulaire.elements.auteur.value,
+        url: nouveauUrl,
+        auteur: nouveauAuteur,
 
     };
 
-    var elementLien = creerElementLien(nouveauLien);
-    contenu.insertBefore(elementLien, document.getElementsByClassName("lien")[0]);
-  
-    var blocBleu = document.createElement("div")
-    blocBleu.id = "blocBleu";
-    blocBleu.textContent = "Le lien " + nouveauTitre + " a bien été ajouté !";
-    blocBleu.style.marginTop = "25px";
-    blocBleu.style.color = "#428bca";
-    blocBleu.style.backgroundColor = "LightBlue";
-    hautElt.replaceChild(blocBleu, blocFormulaire);
-    setTimeout(function(){
-        hautElt.replaceChild(boutonAjoutLienElt, blocBleu);
+    //on teste si les valeurs sont remplies
+    if (nouveauAuteur == "" || nouveauUrl == "" || nouveauTitre == "") {
+
+        aideFormulaire.textContent = "Un champs est vide";
+
+
+
+    } else {
+
+        var elementLien = creerElementLien(nouveauLien);
+        contenu.insertBefore(elementLien, document.getElementsByClassName("lien")[0]);
+
         
-    },2000)
+        
+        
+        
+        var blocBleu = document.createElement("p")
+        blocBleu.id = "blocBleu";
+        blocBleu.textContent = "Le lien " + nouveauTitre + " a bien été ajouté !";
+        blocBleu.style.marginTop = "25px";
+        blocBleu.style.color = "#428bca";
+        blocBleu.style.backgroundColor = "LightBlue";
+        hautElt.replaceChild(blocBleu, blocFormulaire);
+        setTimeout(function () {
+            hautElt.replaceChild(boutonAjoutLienElt, blocBleu);
 
-    
-    
-    
-     e.preventDefault();
-    //hautElt.replaceChild(blocBleu, boutonAjoutLienElt);
-    
+        }, 2000)
 
 
 
+
+
+
+    }
+
+
+    e.preventDefault();
 });
-
-// création du bandeau bleu qui apparait 2s
-function confirmation(nouveauLien) {
-
-
-
-
-
-}
