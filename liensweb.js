@@ -152,12 +152,6 @@ blocFormulaire.addEventListener("submit", function (e) {
     var nouveauAuteur = blocFormulaire.elements.auteur.value;
     var nouveauUrl = blocFormulaire.elements.lien.value;
     var nouveauTitre = blocFormulaire.elements.titre.value;
-    var nouveauLien = {
-        titre: nouveauTitre,
-        url: nouveauUrl,
-        auteur: nouveauAuteur,
-
-    };
 
     //on teste si les valeurs sont remplies
     if (nouveauAuteur == "" || nouveauUrl == "" || nouveauTitre == "") {
@@ -168,6 +162,26 @@ blocFormulaire.addEventListener("submit", function (e) {
 
     } else {
 
+        // si on est ici c'est que tous les champs du formulaire sont remplis !
+        // Si l’URL saisie ne commence ni par “http://” ni par “https://”, on lui ajoute “http://” au début.
+        
+        var regexLien = /^https?:\/\//;
+        
+        if (regexLien.test(nouveauUrl) == false){
+            console.log("plouf");
+            nouveauUrl = "http://" + nouveauUrl;
+            
+            }
+        
+            var nouveauLien = {
+        titre: nouveauTitre,
+        url: nouveauUrl,
+        auteur: nouveauAuteur,
+
+    };
+
+        
+        
         var elementLien = creerElementLien(nouveauLien);
         contenu.insertBefore(elementLien, document.getElementsByClassName("lien")[0]);
 
